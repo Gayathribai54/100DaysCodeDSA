@@ -18,18 +18,28 @@ arr = [1, 0, 1, 1, 0, 0, 1, 1, 1, 0]
 k = 2
 
 function findProductivity(arr, k) {
+    let left = 0;
+    let zeroCount = 0;
     let maxLength = 0;
-    for (let i = 0; i < arr.length; i++) {
-        let zeroCount = 0;
-        for (let j = i; j < arr.length; j++) {
-            if (arr[j] == 0) {
-                zeroCount += 1;
-            }
-            if (zeroCount > k) break;
-        currentLength = j - i + 1;
-        maxLength = Math.max(maxLength, currentLength);
+
+    for (let right = 0; right < arr.length; right++) {
+        if (arr[right] === 0) {
+            zeroCount++;
         }
+
+        while (zeroCount > k) {
+            if (arr[left] === 0) {
+                zeroCount--;
+            }
+            left++;
+        }
+
+        maxLength = Math.max(maxLength, right - left + 1);
     }
+
     return maxLength;
 }
-console.log(findProductivity([1, 0, 1, 1, 0, 0, 1, 1, 1, 0], 2))
+
+let arr = [1, 0, 1, 1, 0, 0, 1, 1, 1, 0];
+let k = 2;
+console.log(findProductivity(arr, k)); // ✅ Output: 7
